@@ -341,7 +341,7 @@ export default function Home() {
                         <div className="flex justify-between">
                           <div>
                             <div className="font-bold text-xl">{chunk.chapter_title}</div>
-                            <div className="mt-1 font-bold text-sm">{chunk.section_title}</div>
+                            {/* <div className="mt-1 font-bold text-sm">{chunk.section_title}</div> */}
                           </div>
                           <a
                             className="hover:opacity-50 ml-2"
