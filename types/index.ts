@@ -2,8 +2,7 @@ export enum OpenAIModel {
   DAVINCI_TURBO = "gpt-3.5-turbo"
 }
 
-export type TNSSection = {
-  chapter_num: number;
+export type LawSection = {
   chapter_title: string;
   section_title: string;
   section_url: string;
@@ -11,11 +10,10 @@ export type TNSSection = {
   content: string;
   content_length: number;
   content_tokens: number;
-  chunks: TNSChunk[];
+  chunks: LawChunk[];
 };
 
-export type TNSChunk = {
-  chapter_num: number;
+export type LawChunk = {
   chapter_title: string;
   section_title: string;
   section_url: string;
@@ -27,7 +25,7 @@ export type TNSChunk = {
   embedding: number[];
 };
 
-export type TNSBook = {
+export type LawVault = {
   book_title: string;
   author: string;
   book_url: string;
@@ -35,5 +33,5 @@ export type TNSBook = {
   current_date: string;
   length: number;
   tokens: number;
-  sections: TNSSection[];
+  sections: LawSection[];
 };

@@ -22,50 +22,7 @@ const getLinks = async () => {
   return filtered;
 };
 
-const getChapterTitle = async (num: number) => {
-  switch (num) {
-    case 1:
-      return "The Constitution";
-    case 2:
-      return "The Republic";
-    case 3:
-      return "Citizenship";
-    case 4:
-      return "Fundamental and Other Human Rights and Freedoms";
-    case 5:
-      return "Representation of the People";
-    case 6:
-      return "The Legislature";
-    case 7:
-      return "The Executive";
-    case 8:
-        return "The Judiciary";
-    case 9:
-        return "Finance";
-    case 10:
-        return "Public Service";
-    case 11:
-        return "Local Government";
-    case 12:
-        return "Defence and National Security";
-    case 13:
-        return "Inspectorate of Government";
-    case 14:
-        return "Leadership Code of Conduct";
-    case 15:
-        return "Land And Environment";
-    case 16:
-        return "The Institution of Traditional or Cultural Leaders";
-    case 17:
-        return "General and miscellaneous";
-    case 18:
-        return "Amendment of The Constitution";
-    case 19:
-        return "Transitional Provisions";
-    default:
-      return "";
-  }
-};
+
 
 const getSection = async (link: string) => {
   const html = await axios.get(link);
@@ -83,7 +40,8 @@ const getSection = async (link: string) => {
     const split = lines[0].split("Chapter");
 
     CHAPTER_NUM = +split[1].trim();
-    CHAPTER_TITLE = await getChapterTitle(CHAPTER_NUM);
+    
+    CHAPTER_TITLE = lines[1]
 
     sectionTitle = lines[2];
 

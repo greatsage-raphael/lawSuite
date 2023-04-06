@@ -33,7 +33,7 @@ const generateEmbeddings = async (sections: TNSSection[]) => {
         const [{ embedding }] = embeddingResponse.data.data;
 
         const { data, error } = await supabase
-          .from("ugandaconstitution")
+          .from("ugvault")
           .insert({
             chapter_num,
             chapter_title,
@@ -66,7 +66,7 @@ const generateEmbeddings = async (sections: TNSSection[]) => {
 
 (async () => {
   try {
-    const book: TNSBook = JSON.parse(fs.readFileSync("scripts/ugandaconstitution.json", "utf8"));
+    const book: TNSBook = JSON.parse(fs.readFileSync("scripts/ugvault.json", "utf8"));
 
     await generateEmbeddings(book.sections);
   } catch (err) {

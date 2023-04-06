@@ -6,6 +6,7 @@ import { IconArrowRight, IconExternalLink, IconSearch } from "@tabler/icons-reac
 import endent from "endent";
 import Head from "next/head";
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 
 export default function Home() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -202,7 +203,7 @@ export default function Home() {
         <title>LawSuite 💼</title>
         <meta
           name="description"
-          content={`AI-powered search and chat for Uganda's Constitution"`}
+          content={`AI-powered search and chat for Uganda's law Corpus`}
         />
         <meta
           name="viewport"
@@ -289,7 +290,7 @@ export default function Home() {
                   ref={inputRef}
                   className="h-12 w-full rounded-full border border-zinc-600 pr-12 pl-11 focus:border-zinc-800 focus:outline-none focus:ring-1 focus:ring-zinc-800 sm:h-16 sm:py-2 sm:pr-16 sm:pl-16 sm:text-lg"
                   type="text"
-                  placeholder="What are my rights ?"
+                  placeholder="What is the punishment for theft ?"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={handleKeyDown}
@@ -384,7 +385,11 @@ export default function Home() {
                 ))}
               </div>
             ) : (
-              <div className="mt-6 text-center text-lg">{`AI-powered search & chat for Uganda's Constitution`}</div>
+              < Link
+              href='https://the-constitution-of-uganda.vercel.app/'
+              >
+              <div className="mt-6 text-center text-lg">{`AI-powered search & chat for Uganda's Law Corpus. Click here to see list of material ☝🏿`}</div>
+              </Link>
             )}
           </div>
         </div>

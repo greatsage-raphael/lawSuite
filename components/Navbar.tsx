@@ -15,7 +15,7 @@ export const Navbar: FC = () => {
           target="_blank"
           rel="noreferrer"
         >
-          <div className="hidden sm:flex">The Constitution of Uganda</div>
+          <div className="hidden sm:flex">The Law Vault UG</div>
 
           <IconExternalLink
             className="ml-1"
