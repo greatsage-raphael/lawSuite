@@ -124,7 +124,7 @@ npm run dev
 
 Thanks to [Mckay Wrigley](https://github.com/mckaywrigley) for his work on [The Network State GPT](https://github.com/mckaywrigley/the-network-state-gpt). This project would not be possible if he didn't make the project open-source. I highly recommend you check it out.
 
-I would also like to shout out the open source technologies without which this project wouldn't have been possible: [Supabase](https://supabase.com/), [Nextjs](https://nextjs.org/), [Nextra](https://nextjs.org/). I highly recommend you check them out.
+I would also like to shout out the open source technologies without which this project wouldn't have been possible: [Supabase](https://supabase.com/), [Nextjs](https://nextjs.org/), [Nextra](https://nextra.site/). I highly recommend you check them out.
 
 ## Contact
 
