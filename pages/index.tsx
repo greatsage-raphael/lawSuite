@@ -290,7 +290,7 @@ export default function Home() {
                   ref={inputRef}
                   className="h-12 w-full rounded-full border border-zinc-600 pr-12 pl-11 focus:border-zinc-800 focus:outline-none focus:ring-1 focus:ring-zinc-800 sm:h-16 sm:py-2 sm:pr-16 sm:pl-16 sm:text-lg"
                   type="text"
-                  placeholder="What is the punishment for theft ?"
+                  placeholder="What are my rights ?"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={handleKeyDown}
@@ -388,7 +388,7 @@ export default function Home() {
               < Link
               href='https://the-constitution-of-uganda.vercel.app/'
               >
-              <div className="mt-6 text-center text-lg">{`AI-powered search & chat for Uganda's Law Corpus. Click here to see list of material ☝🏿`}</div>
+              <div className="mt-6 text-center text-lg">{`AI-powered search & chat for Uganda's Law Corpus. Click here to see list of material ☝🏿. This app is for research purposes.`}</div>
               </Link>
             )}
           </div>

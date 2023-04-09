@@ -1,31 +1,30 @@
-# The Network State GPT
+# LawSuite Ug
 
-AI-powered search and chat for [Balaji Srinivasan's](https://twitter.com/balajis) ["The Network State."](https://thenetworkstate.com/)
-
+AI-powered search and chat for [Ugandas Law Corpus](https://the-constitution-of-uganda.vercel.app/)
 All code & data used is 100% open-source.
 
-[![The Network State GPT](./public/cover.png)](https://the-network-state-gpt.vercel.app/)
+[![LawSuite](./public/lawsuite.png)](https://law-suite.vercel.app/)
 
 ## Dataset
 
 The dataset is a CSV file containing all text & embeddings used.
 
-Download it [here](https://drive.google.com/file/d/1djr6I4-oPNTABaqrmubaL_5tSXetbrdf/view).
+View it [here](scripts/ugvault.json).
 
 I recommend getting familiar with fetching, cleaning, and storing data as outlined in the scraping and embedding scripts below, but feel free to skip those steps and just use the dataset.
 
 ## How It Works
 
-The Network State GPT provides 2 things:
+LawSuite provides 2 things:
 
-1. A search interface for the book.
-2. A chat interface for the book.
+1. A search interface for Uganda's law corpus e.g constitution, penal code.
+2. A chat interface for the information.
 
 ### Search
 
 Search was created with [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) (`text-embedding-ada-002`).
 
-First, we loop over the book and generate embeddings for each chunk of text.
+First, we loop over our website and generate embeddings for each chunk of text.
 
 Then in the app we take the user's search query, generate an embedding, and use the result to find the most similar passages from the book.
 
@@ -114,16 +113,12 @@ npm run dev
 
 ## Credits
 
-Thanks to [Balaji Srinivasan](https://twitter.com/balajis) for his work on [The Network State](https://www.thenetworkstate.com). This project would not be possible if he didn't make the book open-source. I highly recommend you check it out.
+Thanks to [Mckay Wrigley](https://github.com/mckaywrigley) for his work on [The Network State GPT](https://github.com/mckaywrigley/the-network-state-gpt). This project would not be possible if he didn't make the project open-source. I highly recommend you check it out.
 
 ## Contact
 
-If you have any questions, feel free to reach out to me on [Twitter](https://twitter.com/mckaywrigley).
+If you have any questions, feel free to reach out to me on [Gmail](bizzicole87@gmail.com).
 
 ## Notes
 
-I sacrificed composability for simplicity in the app.
-
-Yes, you can make things more modular and reusable.
-
-But I kept pretty much everything in the homepage component for the sake of simplicity.
+New feature incoming: Ability to upload a pdf and have questions about the pdf answered.
