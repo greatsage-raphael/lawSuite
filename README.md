@@ -1,6 +1,7 @@
 # LawSuite Ug
 
 AI-powered search and chat for [Ugandas Law Corpus](https://the-constitution-of-uganda.vercel.app/)
+
 All code & data used is 100% open-source.
 
 [![LawSuite](./public/lawsuite.png)](https://law-suite.vercel.app/)
@@ -39,6 +40,14 @@ Results are ranked by similarity score and returned to the user.
 Chat builds on top of search. It uses search results to create a prompt that is fed into GPT-3.
 
 This allows for a chat-like experience where the user can ask questions about the book and get answers.
+
+
+### law vault
+
+This is the website with the law material that is scrapped. I built it with [Nextra](https://nextra.site/).  
+
+[![LawVault](./public/lawvault.png)](https://the-constitution-of-uganda.vercel.app/)
+
 
 ## Running Locally
 
@@ -114,6 +123,8 @@ npm run dev
 ## Credits
 
 Thanks to [Mckay Wrigley](https://github.com/mckaywrigley) for his work on [The Network State GPT](https://github.com/mckaywrigley/the-network-state-gpt). This project would not be possible if he didn't make the project open-source. I highly recommend you check it out.
+
+I would also like to shout out the open source technologies without which this project wouldn't have been possible: [Supabase](https://supabase.com/), [Nextjs](https://nextjs.org/), [Nextra](https://nextjs.org/). I highly recommend you check them out.
 
 ## Contact
 
