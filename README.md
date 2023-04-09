@@ -65,7 +65,7 @@ Note: You don't have to use Supabase. Use whatever method you prefer to store yo
 3. Clone repo
 
 ```bash
-git clone https://github.com/mckaywrigley/the-network-state-gpt.git
+git clone https://github.com/greatsage-raphael/lawSuite.git
 ```
 
 4. Install dependencies
