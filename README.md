@@ -7,7 +7,7 @@ All code & data used is 100% open-source.
 
 ## Dataset
 
-The dataset is a CSV file containing all text & embeddings used.
+The dataset is a json file containing all text.
 
 View it [here](scripts/ugvault.json).
 
