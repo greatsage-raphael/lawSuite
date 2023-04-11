@@ -4,7 +4,7 @@ import fs from "fs";
 import { encode } from "gpt-3-encoder";
 import { TNSChunk, TNSSection } from "./../types/index";
 
-const BASE_URL = "https://the-constitution-of-uganda.vercel.app";
+const BASE_URL = "http://kenyalaw.org:8181/exist/kenyalex/";
 const CHUNK_SIZE = 200;
 
 let CHAPTER_NUM = 1;
@@ -13,7 +13,7 @@ let CHAPTER_TITLE = "";
 const getLinks = async () => {
   const html = await axios.get(BASE_URL);
   const $ = cheerio.load(html.data);
-  const main = $("article");
+  const main = $("#toc-listing");
 
   const links = main.find("a");
   const hrefs = links.map((i, link) => $(link).attr("href")).get();
@@ -27,7 +27,7 @@ const getLinks = async () => {
 const getSection = async (link: string) => {
   const html = await axios.get(link);
   const $ = cheerio.load(html.data);
-  const text = $("article").text();
+  const text = $("#contentCell").text();
 
   
 
