@@ -1,10 +1,16 @@
 # LawSuite Ug
 
-AI-powered search and chat for [Ugandas Law Corpus](https://the-constitution-of-uganda.vercel.app/)
+AI-powered search and chat for [Uganda's Law Corpus](https://the-constitution-of-uganda.vercel.app/)
 
 All code & data used is 100% open-source.
 
 [![LawSuite](./public/lawsuite.png)](https://law-suite.vercel.app/)
+
+### law vault
+
+This is the website with the law material that is scrapped. I built it with [Nextra](https://nextra.site/).  
+
+[![LawVault](./public/lawvault.png)](https://the-constitution-of-uganda.vercel.app/)
 
 ## Dataset
 
@@ -41,12 +47,6 @@ Chat builds on top of search. It uses search results to create a prompt that is 
 
 This allows for a chat-like experience where the user can ask questions about the book and get answers.
 
-
-### law vault
-
-This is the website with the law material that is scrapped. I built it with [Nextra](https://nextra.site/).  
-
-[![LawVault](./public/lawvault.png)](https://the-constitution-of-uganda.vercel.app/)
 
 
 ## Running Locally
