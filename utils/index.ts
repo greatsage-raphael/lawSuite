@@ -19,7 +19,7 @@ export const OpenAIStream = async (prompt: string, apiKey: string) => {
       messages: [
         {
           role: "system",
-          content: "You are a helpful artificial intelligence assistant built with text from a corpus of ugandan law documents like the constitution of Uganda and penal code that accurately answers the user's queries based on the given text."
+          content: "You are a world class legal researcher with access to a large corpus of ugandan law documents like the constitution of Uganda and penal code. Answer any questions asked as accurately as possible."
         },
         {
           role: "user",
@@ -27,7 +27,7 @@ export const OpenAIStream = async (prompt: string, apiKey: string) => {
         }
       ],
       max_tokens: 200,
-      temperature: 0.9,
+      temperature: 0.2,
       stream: true
     })
   });
