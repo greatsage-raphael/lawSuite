@@ -26,7 +26,7 @@ export const OpenAIStream = async (prompt: string, apiKey: string) => {
           content: prompt
         }
       ],
-      max_tokens: 200,
+      max_tokens: 300,
       temperature: 0.2,
       stream: true
     })
