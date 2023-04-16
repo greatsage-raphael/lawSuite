@@ -1,61 +1,74 @@
-import axios from "axios";
-import * as cheerio from "cheerio";
+import puppeteer from "puppeteer";
 import fs from "fs";
 import { encode } from "gpt-3-encoder";
-import { TNSChunk, TNSSection } from "./../types/index";
+import { kenyaChunk, kenyaSection } from "./../types/index";
 
-const BASE_URL = "http://kenyalaw.org:8181/exist/kenyalex/";
+
+const BASE_URL = "http://www.kenyalaw.org:8181/exist/";
+const url = "https://kenya-law.vercel.app/"
 const CHUNK_SIZE = 200;
 
-let CHAPTER_NUM = 1;
-let CHAPTER_TITLE = "";
+
 
 const getLinks = async () => {
-  const html = await axios.get(BASE_URL);
-  const $ = cheerio.load(html.data);
-  const main = $("#toc-listing");
-
-  const links = main.find("a");
-  const hrefs = links.map((i, link) => $(link).attr("href")).get();
-  const filtered = hrefs.filter((href) => !href.startsWith("https")).filter((href, i, arr) => arr.indexOf(href) === i);
-
-  return filtered;
+  // increase the timeout value to give the page more time to load however, be aware that this can cause your program to hang indefinitely if the page cannot be reached
+  const browser = await puppeteer.launch({
+    timeout: 0
+  });
+    const page = await browser.newPage();
+    await page.goto(url);
+  
+    const links = await page.$$("main a");
+    const filtered = [];
+    
+    // loop through all links and apply filter
+    for (const link of links) {
+      const href = await (await link.getProperty("href")).jsonValue();
+      if (href.includes("exist")) {
+        // filter the link and save the text after "exist"
+        const filteredLink = href.split("exist")[1].substring(1);
+        filtered.push(filteredLink);
+      }
+    }
+  
+    await browser.close();
+    console.log(filtered);
+    return filtered;
 };
 
 
 
 const getSection = async (link: string) => {
-  const html = await axios.get(link);
-  const $ = cheerio.load(html.data);
-  const text = $("#contentCell").text();
+  const browser = await puppeteer.launch({
+    timeout: 0 //disabling timeout
+  });
+  const page = await browser.newPage();
+  // Configure the navigation timeout
+   page.setDefaultNavigationTimeout(0);
+  await page.goto(link, {waitUntil: 'networkidle2'});
 
+  const actTitleText = await page.$eval("tbody div.act-title", (el: { textContent: any; })  => el?.textContent) || "Act Title: kenyan law";
+  const actTitle = actTitleText ? (actTitleText.split(':')[1] || 'kenyan Law').trim(): 'Kenyan Law';
+
+  const contentCell = await page.$eval("#contentCell", (el: { innerHTML: any; }) => el.innerHTML);
+  const paragraphsString = contentCell.replace(/<[^>]*>?/gm, "\n").trim();
+  const lines = paragraphsString.split("\n").filter((line: string) => line.trim() !== "");
+
+  const sectionText = lines.join(" ")
+
+
+  const links = await page.$$eval("tbody a", (elements: any[]) => 
+    elements.map(el => el.href)
+  );
   
+  // filter for the link that ends with ".pdf"
+  const pdfLink = links.find((link: string) => link.endsWith('.pdf') && link.includes('docs'));
 
-  const lines = text.split("\n").filter((line) => line.trim() !== "");
+  await browser.close();
 
-  let sectionText = "";
-  let sectionTitle = "";
-
-  if (lines[0].includes("Chapter")) {
-    const split = lines[0].split("Chapter");
-
-    CHAPTER_NUM = +split[1].trim();
-    
-    CHAPTER_TITLE = lines[1]
-
-    sectionTitle = lines[2];
-
-    sectionText = lines.slice(2).join(" ");
-  } else {
-    sectionTitle = lines[0];
-
-    sectionText = lines.slice(1).join(" ");
-  }
-
-  const section: TNSSection = {
-    chapter_num: CHAPTER_NUM,
-    chapter_title: CHAPTER_TITLE,
-    section_title: sectionTitle,
+  const section: kenyaSection = {
+    act_title: actTitle,
+    PDFLink: pdfLink,
     section_url: link,
     section_num: 0, // handled in embed.ts
     content: sectionText,
@@ -67,7 +80,7 @@ const getSection = async (link: string) => {
   return section;
 };
 
-const chunkSection = async (section: TNSSection) => {
+const chunkSection = async (section: kenyaSection) => {
   const { chunks, content, ...chunklessSection } = section;
 
   let sectionTextChunks = [];
@@ -78,14 +91,17 @@ const chunkSection = async (section: TNSSection) => {
 
     for (let i = 0; i < split.length; i++) {
       const sentence = split[i];
+      
+      if (!sentence) continue; // skip empty or undefined strings
+      
       const sentenceTokenLength = encode(sentence);
       const chunkTextTokenLength = encode(chunkText).length;
-
+    
       if (chunkTextTokenLength + sentenceTokenLength.length > CHUNK_SIZE) {
         sectionTextChunks.push(chunkText);
         chunkText = "";
       }
-
+    
       if (sentence[sentence.length - 1].match(/[a-z0-9]/i)) {
         chunkText += sentence + ". ";
       } else {
@@ -101,13 +117,13 @@ const chunkSection = async (section: TNSSection) => {
   const sectionChunks = sectionTextChunks.map((text) => {
     const trimmedText = text.trim();
 
-    const chunk: TNSChunk = {
+    const chunk: kenyaChunk= {
       ...chunklessSection,
       content: trimmedText,
       content_length: trimmedText.length,
       content_tokens: encode(trimmedText).length,
-      chunk_num: 0, // handled in embed.ts
-      embedding: []
+      chunk_num: 0,
+      embedding: [],
     };
 
     return chunk;
@@ -128,7 +144,7 @@ const chunkSection = async (section: TNSSection) => {
     }
   }
 
-  const chunkedSection: TNSSection = {
+  const chunkedSection: kenyaSection = {
     ...section,
     chunks: sectionChunks
   };
@@ -139,18 +155,20 @@ const chunkSection = async (section: TNSSection) => {
 (async () => {
   const links = await getLinks();
 
-  let sections: TNSSection[] = [];
+  let sections: kenyaSection[] = [];
 
   for (let i = 0; i < links.length; i++) {
     const link = `${BASE_URL}${links[i]}`;
-    const section = await getSection(link);
-    const chunkedSection = await chunkSection(section);
-    sections.push(chunkedSection);
+    if (!link.endsWith('.pdf') && !link.includes('LEG')) {
+      const section = await getSection(link);
+      const chunkedSection = await chunkSection(section);
+      sections.push(chunkedSection);
+    }
   }
 
   const book = {
-    book_title: "The Constitution Of The Republic Of Uganda",
-    author: "We The People Of Uganda",
+    book_title: "The laws of Kenya",
+    author: "We The People Of Kenya",
     book_url: BASE_URL,
     publication_date: "1962-10-09",
     current_date: "2023-03-14",
@@ -159,5 +177,5 @@ const chunkSection = async (section: TNSSection) => {
     sections
   };
 
-  fs.writeFileSync("scripts/ugandaconstitution.json", JSON.stringify(book, null, 2));
+  fs.writeFileSync("kenya.json", JSON.stringify(book, null, 2));
 })();

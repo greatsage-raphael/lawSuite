@@ -27,11 +27,11 @@ LawSuite provides 2 things:
 1. A search interface for Uganda's law corpus e.g constitution, penal code.
 2. A chat interface for the information.
 
-### Search
+### Search (Supabase and OpenAl Embeddings)
 
 Search was created with [OpenAI Embeddings](https://platform.openai.com/docs/guides/embeddings) (`text-embedding-ada-002`).
 
-First, we loop over our website and generate embeddings for each chunk of text.
+First, we loop over our [Law Vault](https://the-constitution-of-uganda.vercel.app/) which has our laws and generate embeddings for each chunk of text.
 
 Then in the app we take the user's search query, generate an embedding, and use the result to find the most similar passages from the book.
 
@@ -41,11 +41,11 @@ Our database is a Postgres database with the [pgvector](https://github.com/pgvec
 
 Results are ranked by similarity score and returned to the user.
 
-### Chat
+### Chat (OpenAI chat completion endpoint)
 
 Chat builds on top of search. It uses search results to create a prompt that is fed into GPT-3.
 
-This allows for a chat-like experience where the user can ask questions about the book and get answers.
+This allows for a chat-like experience where the user can ask questions about the law of their country and get answers.
 
 
 
