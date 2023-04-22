@@ -27,6 +27,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { files } = await formidablePromise(req, {
     ...formidableConfig,
     // consume this, otherwise formidable tries to save the file to disk
+     // @ts-ignore
     fileWriteStreamHandler: (file: any): Writable => fileConsumer(file, endBuffers),
   })
 
@@ -36,6 +37,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
   const pineconeApiKey = process.env.pinecone_api_key ?? ""
 
   const docs = await Promise.all(
+     // @ts-ignore
     Object.values(files).map(async (fileObj: formidable.File) => {
       let fileText = ""
       const fileData = endBuffers[fileObj.newFilename]
