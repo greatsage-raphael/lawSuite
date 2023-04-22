@@ -35,6 +35,7 @@ export default function IndexPage() {
 
   const onDrop = useCallback((acceptedFiles: React.SetStateAction<null>) => {
     setFiles(acceptedFiles)
+    console.log(acceptedFiles)
   }, [])
 
   const handleUpload = useCallback(async () => {
@@ -197,9 +198,11 @@ export default function IndexPage() {
           >
             <div className="flex min-h-[150px] cursor-pointer items-center justify-center p-10">
               <input {...getInputProps()} />
-
+              
+               
               {files ? (
                 <ul>
+                  {/* @ts-ignore */}
                   {files.map((file) => (
                     <li key={file.name}>* {file.name}</li>
                   ))}

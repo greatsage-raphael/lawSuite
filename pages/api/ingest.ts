@@ -74,7 +74,6 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     const chunkSize = 100
     const chunks = chunk(flatDocs, chunkSize)
-    console.log("chunks:", chunks)
 
     await Promise.all(
       chunks.map((chunk) => {
