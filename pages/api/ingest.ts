@@ -4,7 +4,7 @@ import { Document } from "langchain/document"
 import { OpenAIEmbeddings } from "langchain/embeddings"
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter"
 import { PineconeStore } from "langchain/vectorstores"
-
+import { Writable } from 'stream'
 import { fileConsumer, formidablePromise } from "@/lib/formidable"
 import { getTextContentFromPDF } from "@/lib/pdf"
 import { createPineconeIndex } from "@/lib/pinecone"
@@ -27,7 +27,7 @@ export async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { files } = await formidablePromise(req, {
     ...formidableConfig,
     // consume this, otherwise formidable tries to save the file to disk
-    fileWriteStreamHandler: (file: any) => fileConsumer(file, endBuffers),
+    fileWriteStreamHandler: (file: any): Writable => fileConsumer(file, endBuffers),
   })
 
   const openaiApiKey = process.env.OPENAI_API_KEY ?? ""
