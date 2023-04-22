@@ -1,12 +1,12 @@
 import { Answer } from "@/components/Answer/Answer";
 import { Footer } from "@/components/Footer";
-import { Navbar } from "@/components/Navbar";
 import { TNSChunk } from "@/types";
 import { IconArrowRight, IconExternalLink, IconSearch } from "@tabler/icons-react";
 import endent from "endent";
 import Head from "next/head";
 import { KeyboardEvent, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { Layout } from "@/components/layout";
 
 export default function Home() {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -210,9 +210,8 @@ export default function Home() {
           content="width=device-width, initial-scale=1"
         />
       </Head>
-
+       <Layout>
       <div className="flex flex-col h-screen">
-        <Navbar />
         <div className="flex-1 overflow-auto">
           <div className="mx-auto flex h-full w-full max-w-[750px] flex-col items-center px-3 pt-4 sm:pt-8">
             <button
@@ -395,6 +394,7 @@ export default function Home() {
         </div>
         <Footer />
       </div>
+      </Layout>
     </>
   );
 }
