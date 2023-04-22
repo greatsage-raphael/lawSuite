@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from "react"
 import Head from "next/head"
-import { useCredentialsCookie } from "@/context/credentials-context"
 import { useToast } from "@/hooks/use-toast"
 import { Bot, Loader2, Send, UploadCloud, User } from "lucide-react"
 import { useDropzone } from "react-dropzone"
@@ -22,7 +21,6 @@ export default function IndexPage() {
   const [isUploading, setIsUploading] = useState(false)
   const [isAsking, setIsAsking] = useState(false)
   const [chatHistory, setChatHistory] = useState([])
-  const { cookieValue } = useCredentialsCookie()
   const [githubUrl, setGithubUrl] = useState("")
 
   const { toast } = useToast()
@@ -33,13 +31,15 @@ export default function IndexPage() {
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setQuestion(e.target.value)
   }
+  
 
-  const onDrop = useCallback((acceptedFiles) => {
+  const onDrop = useCallback((acceptedFiles: React.SetStateAction<null>) => {
     setFiles(acceptedFiles)
   }, [])
 
   const handleUpload = useCallback(async () => {
   const formData = new FormData()
+   // @ts-ignore
   Array.from(files).forEach((file: File) => {
     formData.append(file.name, file)
   })
@@ -71,41 +71,42 @@ export default function IndexPage() {
     }
   }, [files, toast])
 
-  const handleGithubUpload = useCallback(async () => {
-    setIsUploading(true)
-    try {
-      const response = await fetch("/api/github", {
-        body: JSON.stringify({
-          credentials: cookieValue,
-          githubUrl,
-        }),
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-      })
-      const result = await response.json()
-      if (result.error) {
-        toast({
-          title: "Something went wrong.",
-          description: result.error,
-        })
-      } else {
-        toast({
-          title: "Upload success.",
-        })
-      }
+  // const handleGithubUpload = useCallback(async () => {
+  //   setIsUploading(true)
+  //   try {
+  //     const response = await fetch("/api/github", {
+  //       body: JSON.stringify({
+  //         credentials: cookieValue,
+  //         githubUrl,
+  //       }),
+  //       method: "POST",
+  //       headers: {
+  //         "content-type": "application/json",
+  //       },
+  //     })
+  //     const result = await response.json()
+  //     if (result.error) {
+  //       toast({
+  //         title: "Something went wrong.",
+  //         description: result.error,
+  //       })
+  //     } else {
+  //       toast({
+  //         title: "Upload success.",
+  //       })
+  //     }
 
-      setIsUploading(false)
-    } catch (e) {
-      toast({
-        title: "Something went wrong.",
-      })
-      setIsUploading(false)
-    }
-  }, [githubUrl, cookieValue, toast])
+  //     setIsUploading(false)
+  //   } catch (e) {
+  //     toast({
+  //       title: "Something went wrong.",
+  //     })
+  //     setIsUploading(false)
+  //   }
+  // }, [githubUrl, cookieValue, toast])
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
+     // @ts-ignore
     onDrop,
     accept: {
       "application/pdf": [".pdf"],
@@ -117,7 +118,9 @@ export default function IndexPage() {
     setIsAsking(true)
     setQuestion("")
     setChatHistory([
+       // @ts-ignore
       ...chatHistory,
+       // @ts-ignore
       {
         from: "user",
         content: question,
@@ -128,6 +131,7 @@ export default function IndexPage() {
       body: JSON.stringify({
         question,
         chatHistory: chatHistory.reduce((prev, curr) => {
+           // @ts-ignore
           prev += curr.content
           return prev
         }, ""),
@@ -140,6 +144,7 @@ export default function IndexPage() {
     const answer = await response.json()
 
     if (answer.text) {
+       // @ts-ignore
       setChatHistory((currentChatHistory) => [
         ...currentChatHistory,
         {
@@ -159,6 +164,7 @@ export default function IndexPage() {
   }, [question, chatHistory, toast])
 
   const handleKeyDown = useCallback(
+     // @ts-ignore
     async (event) => {
       if (event.key === "Enter") {
         handleSubmit()
