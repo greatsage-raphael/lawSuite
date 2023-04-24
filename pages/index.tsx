@@ -12,6 +12,7 @@ export default function Home() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [query, setQuery] = useState<string>("");
+  const [system, setSystem] = useState<string>("");
   const [chunks, setChunks] = useState<TNSChunk[]>([]);
   const [answer, setAnswer] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
@@ -100,12 +101,14 @@ export default function Home() {
     ${results?.map((d: any) => d.content).join("\n\n")}
     `;
 
+    const systemPrompt = system
+
     const answerResponse = await fetch("/api/answer", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ prompt })
+      body: JSON.stringify({ prompt, systemPrompt })
     });
 
     if (!answerResponse.ok) {
@@ -293,7 +296,8 @@ export default function Home() {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={handleKeyDown}
-                />
+                /> 
+                <br />
 
                 <button>
                   <IconArrowRight
@@ -301,6 +305,20 @@ export default function Home() {
                     className="absolute right-2 top-2.5 h-7 w-7 rounded-full bg-blue-500 p-1 hover:cursor-pointer hover:bg-blue-600 sm:right-3 sm:top-3 sm:h-10 sm:w-10 text-white"
                   />
                 </button>
+              </div>
+
+              <p>System Prompt</p> 
+
+              <div className="relative w-full mt-4">
+
+                  <input
+                    ref={inputRef}
+                    className="h-9 w-full rounded-full border border-zinc-600 pr-12 pl-11 focus:border-zinc-800 focus:outline-none focus:ring-1 focus:ring-zinc-800 sm:h-16 sm:py-2 sm:pr-16 sm:pl-16 sm:text-lg"
+                    type="text"
+                    placeholder="You are a world class legal researcher with access to a large corpus of ugandan law documents like the constitution of Uganda and penal code. Answer any questions asked as accurately as possible."
+                    value={system}
+                    onChange={(e) => setSystem(e.target.value)}
+                  />
               </div>
             
             {loading ? (

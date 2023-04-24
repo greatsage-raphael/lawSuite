@@ -4,7 +4,7 @@ import { createParser, ParsedEvent, ReconnectInterval } from "eventsource-parser
 
 export const supabaseAdmin = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!);
 
-export const OpenAIStream = async (prompt: string, apiKey: string) => {
+export const OpenAIStream = async (prompt: string, systemPrompt:string, apiKey: string) => {
   const encoder = new TextEncoder();
   const decoder = new TextDecoder();
 
@@ -19,7 +19,7 @@ export const OpenAIStream = async (prompt: string, apiKey: string) => {
       messages: [
         {
           role: "system",
-          content: "You are a world class legal researcher with access to a large corpus of ugandan law documents like the constitution of Uganda and penal code. Answer any questions asked as accurately as possible."
+          content: systemPrompt || "You are a world class legal researcher with access to a large corpus of ugandan law documents like the constitution of Uganda and penal code. Answer any questions asked as accurately as possible."
         },
         {
           role: "user",
