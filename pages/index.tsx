@@ -307,7 +307,7 @@ export default function Home() {
                 </button>
               </div>
 
-              <p>System Prompt</p> 
+              {/* <p>System Prompt</p> 
 
               <div className="relative w-full mt-4">
 
@@ -319,7 +319,7 @@ export default function Home() {
                     value={system}
                     onChange={(e) => setSystem(e.target.value)}
                   />
-              </div>
+              </div> */}
             
             {loading ? (
               <div className="mt-6 w-full">
