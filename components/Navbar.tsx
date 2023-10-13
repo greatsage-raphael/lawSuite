@@ -10,9 +10,9 @@ export const Navbar: FC = () => {
     <Link href="/">
       <div className="text-2xl no-underline text-grey-darkest hover:text-blue-700">LawSuite💼</div>
     </Link> <br/>
-    <Link href="/upload">
-      <div className="text-2xl no-underline text-grey-darkest hover:text-blue-700"> Upload ⬆️</div> 
-    </Link>
+    <Link href="https://contract-suite.vercel.app/">
+      <div className="text-2xl no-underline text-grey-darkest hover:text-blue-700">Scan Contract</div>
+    </Link> <br/>
     </div>
     <div className="font-bold text-1xl  hover:text-blue-700">
         <Link
@@ -22,8 +22,6 @@ export const Navbar: FC = () => {
            rel="noreferrer"
         >
           <div className="hidden sm:flex">The Law Vault UG</div>
-
-    
     <IconExternalLink
       className="ml-1"
         size={20}

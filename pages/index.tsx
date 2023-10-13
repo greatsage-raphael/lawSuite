@@ -306,20 +306,6 @@ export default function Home() {
                   />
                 </button>
               </div>
-
-              <p>System Prompt</p> 
-
-              <div className="relative w-full mt-4">
-
-                  <input
-                    ref={inputRef}
-                    className="h-9 w-full rounded-full border border-zinc-600 pr-12 pl-11 focus:border-zinc-800 focus:outline-none focus:ring-1 focus:ring-zinc-800 sm:h-16 sm:py-2 sm:pr-16 sm:pl-16 sm:text-lg"
-                    type="text"
-                    placeholder="You are a world class legal researcher with access to a large corpus of ugandan law documents like the constitution of Uganda and penal code. Answer any questions asked as accurately as possible."
-                    value={system}
-                    onChange={(e) => setSystem(e.target.value)}
-                  />
-              </div>
             
             {loading ? (
               <div className="mt-6 w-full">
