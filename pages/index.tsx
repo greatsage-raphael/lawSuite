@@ -20,14 +20,8 @@ export default function Home() {
   const [showSettings, setShowSettings] = useState<boolean>(false);
   const [mode, setMode] = useState<"search" | "chat">("chat");
   const [matchCount, setMatchCount] = useState<number>(5);
-  // const [apiKey, setApiKey] = useState<string>("");
 
   const handleSearch = async () => {
-    // if (!apiKey) {
-    //   alert("Please enter an API key.");
-    //   return;
-    // }
-
     if (!query) {
       alert("Please enter a query.");
       return;
@@ -63,10 +57,7 @@ export default function Home() {
   };
 
   const handleAnswer = async () => {
-    // if (!apiKey) {
-    //   alert("Please enter an API key.");
-    //   return;
-    // }
+    
 
     if (!query) {
       alert("Please enter a query.");
@@ -149,12 +140,6 @@ export default function Home() {
   };
 
   const handleSave = () => {
-    // if (apiKey.length !== 51) {
-    //   alert("Please enter a valid API key.");
-    //   return;
-    // }
-
-    // localStorage.setItem("PG_KEY", apiKey);
     localStorage.setItem("PG_MATCH_COUNT", matchCount.toString());
     localStorage.setItem("PG_MODE", mode);
 
@@ -181,13 +166,8 @@ export default function Home() {
   }, [matchCount]);
 
   useEffect(() => {
-    // const PG_KEY = localStorage.getItem("PG_KEY");
     const PG_MATCH_COUNT = localStorage.getItem("PG_MATCH_COUNT");
     const PG_MODE = localStorage.getItem("PG_MODE");
-
-    // if (PG_KEY) {
-    //   setApiKey(PG_KEY);
-    // }
 
     if (PG_MATCH_COUNT) {
       setMatchCount(parseInt(PG_MATCH_COUNT));
@@ -249,23 +229,6 @@ export default function Home() {
                     className="max-w-[400px] block w-full rounded-md border border-gray-300 p-2 text-black shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm"
                   />
                 </div>
-
-                {/* <div className="mt-2">
-                  <div>OpenAI API Key</div>
-                  <input
-                    type="password"
-                    placeholder="OpenAI API Key"
-                    className="max-w-[400px] block w-full rounded-md border border-gray-300 p-2 text-black shadow-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm"
-                    value={apiKey}
-                    onChange={(e) => {
-                      setApiKey(e.target.value);
-
-                      if (e.target.value.length !== 51) {
-                        setShowSettings(true);
-                      }
-                    }}
-                  />
-                </div> */}
 
                 <div className="mt-4 flex space-x-2 justify-center">
                   <div
@@ -344,8 +307,8 @@ export default function Home() {
                       <div className="mt-4 border border-zinc-600 rounded-lg p-4">
                         <div className="flex justify-between">
                           <div>
-                            <div className="font-bold text-xl">{chunk.chapter_title}</div>
-                            {/* <div className="mt-1 font-bold text-sm">{chunk.section_title}</div> */}
+                            <div className="font-bold text-xl">{chunk.section_title}</div>
+                            <div className="mt-1 font-bold text-sm">{chunk.chapter_title}</div>
                           </div>
                           <a
                             className="hover:opacity-50 ml-2"

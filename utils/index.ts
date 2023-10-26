@@ -19,7 +19,7 @@ export const OpenAIStream = async (prompt: string, systemPrompt:string, apiKey: 
       messages: [
         {
           role: "system",
-          content: systemPrompt || "You are a world class legal researcher with access to a large corpus of ugandan law documents like the constitution of Uganda and penal code. Answer any questions asked as accurately as possible."
+          content: "You are an expert in Ugandan law, with comprehensive knowledge of key documents such as the Constitution of Uganda and the Penal Code. Provide precise and accurate answers to the questions asked"
         },
         {
           role: "user",
